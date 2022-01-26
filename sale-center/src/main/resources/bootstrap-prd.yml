@@ -1,0 +1,12 @@
+spring:
+  cloud:
+    nacos:
+      config:
+        server-addr: 172.16.36.33:8848
+        file-extension: yaml
+        namespace: 63a12958-3200-4090-8ff2-293288ce784f
+        group: DEMO
+      discovery:
+        server-addr: 172.16.36.33:8848
+        namespace: 63a12958-3200-4090-8ff2-293288ce784f
+        group: DEMO

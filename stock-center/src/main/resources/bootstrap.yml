@@ -1,0 +1,7 @@
+server:
+  port: 8053
+spring:
+  application:
+    name: stock-center-service
+  profiles:
+    active: dev

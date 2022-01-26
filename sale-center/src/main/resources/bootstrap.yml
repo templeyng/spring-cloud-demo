@@ -1,0 +1,7 @@
+server:
+  port: 8051
+spring:
+  application:
+    name: product-center-service
+  profiles:
+    active: dev
