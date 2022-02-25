@@ -1,0 +1,7 @@
+server:
+  port: 8530
+spring:
+  application:
+    name: sale-center-service
+  profiles:
+    active: dev

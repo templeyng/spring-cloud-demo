@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisteria.saleCenter.mapper.SaleOrderMapper">
+
+    <!--    <resultMap type="com.wisteria.saleCenter.entity.SaleOrder" id="SaleOrderResultMap">-->
+    <!--        <id column="id" property="id" jdbcType="INTEGER"/>-->
+    <!--        <result column="sale_order_id" property="saleOrderId" jdbcType="INTEGER"/>-->
+    <!--        <result column="status" property="status" jdbcType="INTEGER"/>-->
+    <!--        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>-->
+    <!--        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>-->
+    <!--        <collection property="saleOrderItems" ofType="com.wisteria.saleCenter.entity.SaleOrderItem">-->
+    <!--            <id column="item_id" property="itemId" jdbcType="INTEGER"/>-->
+    <!--            <result column="parent_id" property="parentId" jdbcType="INTEGER"/>-->
+    <!--            <result column="sku_code" property="skuCode" jdbcType="VARCHAR"/>-->
+    <!--            <result column="price" property="price" jdbcType="DECIMAL"/>-->
+    <!--            <result column="quantity" property="quantity" jdbcType="INTEGER"/>-->
+    <!--        </collection>-->
+    <!--    </resultMap>-->
+
+    <insert id="insertSaleOrder" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.wisteria.saleCenter.entity.SaleOrder">
+        INSERT INTO sale_center.sale_order
+        (sale_order_id, status)
+        VALUES
+        (#{saleOrderId},#{status});
+    </insert>
+
+    <insert id="insertSaleOrderItems" useGeneratedKeys="true" keyProperty="itemId"
+            parameterType="java.util.List">
+        INSERT INTO sale_center.sale_order_item
+        (parent_id, sku_code, price, quantity)
+        VALUES
+        <foreach collection="saleOrderItems" item="item" index="index" separator=",">
+            (
+            #{item.parentId},#{item.skuCode},#{item.price},#{item.quantity}
+            )
+        </foreach>
+    </insert>
+
+    <insert id="insertSaleMqError" parameterType="java.lang.String">
+        INSERT INTO sale_center.sale_mq_error
+        (mq_error, status)
+        VALUES(#{message}, 0);
+    </insert>
+
+</mapper>
