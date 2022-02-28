@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisteria.stockCenter.mapper.SkuStockMapper">
+
+    <sql id="normalItems">
+        st.stock_id as stockId, st.sku_code as skuCode, st.inventory_available as inventoryAvailable, st.inventory_total
+        as inventoryTotal
+    </sql>
+
+    <select id="loadSkuStockBySkuCode" parameterType="java.lang.String"
+            resultType="com.wisteria.common.entity.product.SkuStock">
+        SELECT
+        <include refid="normalItems"/>
+        FROM stock_center.sku_stock st where st.sku_code = #{skuCode};
+    </select>
+
+    <insert id="insertSkuStock" parameterType="com.wisteria.common.entity.product.SkuStock">
+        INSERT INTO stock_center.sku_stock
+        (sku_code, inventory_available, inventory_total)
+        VALUES(#{skuCode}, #{inventoryAvailable}, #{inventoryTotal});
+    </insert>
+
+    <update id="updateSkuStock" parameterType="com.wisteria.common.entity.product.SkuStock">
+        UPDATE stock_center.sku_stock
+        SET inventory_available=#{inventoryAvailable}, inventory_total=#{inventoryTotal}
+        WHERE sku_code=#{skuCode};
+    </update>
+
+    <insert id="insertSkuStockFlow" parameterType="com.wisteria.stockCenter.entity.SkuStockFlow">
+        INSERT INTO stock_center.sku_stock_flow
+        (`type`, sku_code, quantity, serial_number)
+        VALUES(#{type}, #{skuCode}, #{quantity}, #{serialNumber});
+    </insert>
+
+    <insert id="insertSkuStockMqError" parameterType="java.lang.String">
+        INSERT INTO stock_center.sku_stock_mq_error
+        (mq_error, status)
+        VALUES(#{message}, 0);
+    </insert>
+</mapper>
