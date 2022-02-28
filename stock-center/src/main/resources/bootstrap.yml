@@ -1,5 +1,5 @@
 server:
-  port: 8053
+  port: 8540
 spring:
   application:
     name: stock-center-service

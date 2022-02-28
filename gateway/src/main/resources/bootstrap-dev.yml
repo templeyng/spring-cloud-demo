@@ -4,7 +4,7 @@ properties:
     namespace: 63a12958-3200-4090-8ff2-293288ce784f
     group: DEMO
     file-extension: yaml
-#    data-id: gateway-router.json
+    common-prop: application-${spring.profiles.active}.yaml
 
 spring:
   cloud:
@@ -14,6 +14,10 @@ spring:
         file-extension: ${properties.nacos.file-extension}
         namespace: ${properties.nacos.namespace}
         group: ${properties.nacos.group}
+        shared-configs[0]:
+          data-id: ${properties.nacos.common-prop}
+          group: ${properties.nacos.group}
+          refresh: true
       discovery:
         server-addr: ${properties.nacos.server-addr}
         group: ${properties.nacos.group}

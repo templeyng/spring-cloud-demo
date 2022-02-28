@@ -1,7 +1,7 @@
 server:
-  port: 8051
+  port: 8530
 spring:
   application:
-    name: product-center-service
+    name: sale-center-service
   profiles:
     active: dev

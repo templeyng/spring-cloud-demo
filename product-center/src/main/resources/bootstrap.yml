@@ -1,5 +1,5 @@
 server:
-  port: 8051
+  port: 8510
 spring:
   application:
     name: product-center-service

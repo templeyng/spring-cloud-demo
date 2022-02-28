@@ -1,7 +1,7 @@
 server:
-  port: 8530
+  port: 8531
 spring:
   application:
-    name: sale-center-service
+    name: sale-task-center-service
   profiles:
     active: dev

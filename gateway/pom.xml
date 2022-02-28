@@ -29,5 +29,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-loadbalancer</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.wisteria</groupId>
+			<artifactId>common-log</artifactId>
+			<version>${nacos-common-base.version}</version>
+		</dependency>
 	</dependencies>
 </project>

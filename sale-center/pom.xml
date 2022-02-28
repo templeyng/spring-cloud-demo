@@ -19,6 +19,16 @@
 
 	<dependencies>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions><!-- 去掉springboot默认配置 -->
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-bootstrap</artifactId>
 		</dependency>
@@ -47,6 +57,11 @@
 		<dependency>
 			<groupId>com.wisteria</groupId>
 			<artifactId>common-utils</artifactId>
+			<version>${nacos-common-base.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.wisteria</groupId>
+			<artifactId>common-log</artifactId>
 			<version>${nacos-common-base.version}</version>
 		</dependency>
 		<!--test-->
