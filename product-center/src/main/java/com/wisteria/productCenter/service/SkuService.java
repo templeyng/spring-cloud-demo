@@ -41,4 +41,6 @@ public interface SkuService {
      * @param skuList
      */
     void insertSkus(List skuList);
+
+    void loadSkuToRedis();
 }

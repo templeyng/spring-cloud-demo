@@ -44,6 +44,8 @@ public final class DicConstant {
     /////////////ResourceID////////////
     public static final String NACOS_RESOURCE_ID = "nacos-resource";
 
+    /////////////Redis Key////////////
+    public static final String PRODUCT_SKU_ALL_LIST = "product_sku_all_list";
 
     /////////////Message////////////
     /////////////QUEUE////////////

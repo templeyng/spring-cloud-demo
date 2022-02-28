@@ -1,6 +1,8 @@
 package com.wisteria.productCenter.service.impl;
 
+import com.wisteria.common.entity.base.DicConstant;
 import com.wisteria.common.entity.product.Sku;
+import com.wisteria.common.utils.ProductRedisTemplate;
 import com.wisteria.productCenter.mapper.SkuMapper;
 import com.wisteria.productCenter.service.SkuService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,9 @@ public class SkuServiceImpl implements SkuService {
 
     @Autowired
     private SkuMapper skuMapper;
+
+    @Autowired
+    private ProductRedisTemplate productRedisTemplate;
 
     @Override
     public List<Sku> loadSkuAll() {
@@ -37,5 +42,13 @@ public class SkuServiceImpl implements SkuService {
     @Override
     public void insertSkus(List skuList) {
         skuMapper.insertSkus(skuList);
+    }
+
+    @Override
+    public void loadSkuToRedis() {
+        final List<Sku> skus = loadSkuAll();
+        skus.forEach(e -> {
+            productRedisTemplate.lSet(DicConstant.PRODUCT_SKU_ALL_LIST, e);
+        });
     }
 }

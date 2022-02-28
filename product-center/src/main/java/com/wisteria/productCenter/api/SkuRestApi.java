@@ -40,4 +40,10 @@ public class SkuRestApi {
         Sku sku = skuService.loadSkuById(skuId);
         return Res.success(sku);
     }
+
+    @GetMapping("loadSkuToRedis")
+    public Res loadSkuToRedis() {
+        skuService.loadSkuToRedis();
+        return Res.success("加载SKU数据到缓存");
+    }
 }

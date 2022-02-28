@@ -2,14 +2,8 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.wisteria.productCenter.mapper.SkuMapper">
 
-    <resultMap id="baseResultMap" type="com.wisteria.common.entity.product.Sku">
-        <id property="skuId" column="sku_id" jdbcType="INTEGER"/>
-        <result property="skuCode" column="sku_code" jdbcType="VARCHAR"/>
-        <result property="skuName" column="sku_name" jdbcType="VARCHAR"/>
-    </resultMap>
-
     <sql id="normalItems">
-        s.sku_id as skuId, s.sku_code as skuCode, s.sku_name as skuName
+        s.sku_id as skuId, s.sku_code as skuCode, s.sku_name as skuName, s.price, s.tax, s.price_total as priceTotal
     </sql>
 
     <select id="loadSkuByCode" parameterType="java.lang.String" resultType="com.wisteria.common.entity.product.Sku">
@@ -32,18 +26,21 @@
 
     <insert id="insertSku" parameterType="com.wisteria.common.entity.product.Sku">
         INSERT INTO product_center.Sku
-        (sku_code, sku_name)
-        VALUES('#{skuCode}', '#{skuName}');
+        (sku_code, sku_name, price, tax, price_total)
+        VALUES('#{skuCode}', '#{skuName}', '#{price}', '#{tax}', '#{priceTotal}');
     </insert>
 
     <insert id="insertSkus" parameterType="java.util.List">
         INSERT INTO product_center.Sku
-        (sku_code, sku_name)
+        (sku_code, sku_name, price, tax, price_total)
         VALUES
         <foreach collection="skuList" item="item" index="index" separator=",">
             (
             #{item.skuCode},
-            #{item.skuName}
+            #{item.skuName},
+            #{item.price},
+            #{item.tax},
+            #{item.priceTotal}
             )
         </foreach>
     </insert>

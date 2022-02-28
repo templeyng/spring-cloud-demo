@@ -2,6 +2,7 @@ package com.wisteria.purchaseCenter.api;
 
 import com.wisteria.common.entity.base.Res;
 import com.wisteria.purchaseCenter.entity.PurchaseOrder;
+import com.wisteria.purchaseCenter.exception.InsertPurchaseOrderRedisException;
 import com.wisteria.purchaseCenter.service.PurchaseOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ public class PurchaseOrderRestApi {
 
     /**
      * 生成采购订单
+     *
      * @param purchaseOrder
      * @return
      */
@@ -28,6 +30,7 @@ public class PurchaseOrderRestApi {
 
     /**
      * 采购入库
+     *
      * @param purchaseOrderId
      * @param skuCode
      * @param purchaseOrderItemId
@@ -41,5 +44,17 @@ public class PurchaseOrderRestApi {
                                     @RequestParam("quantityIn") int quantityIn) {
         purchaseOrderService.purchaseOrderStockIn(purchaseOrderId, skuCode, purchaseOrderItemId, quantityIn);
         return Res.success();
+    }
+
+    @GetMapping("secKillOrderInit")
+    public Res secKillOrderInit() {
+        try {
+            purchaseOrderService.secKillOrderInit();
+            return Res.success();
+        } catch (InsertPurchaseOrderRedisException e) {
+
+            log.error("加载秒杀失败", e);
+        }
+        return Res.error("加载秒杀失败");
     }
 }
