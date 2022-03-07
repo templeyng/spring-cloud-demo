@@ -1,0 +1,7 @@
+server:
+  port: 8541
+spring:
+  application:
+    name: stock-task-center-service
+  profiles:
+    active: dev

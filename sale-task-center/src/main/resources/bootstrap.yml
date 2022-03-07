@@ -1,7 +1,0 @@
-server:
-  port: 8531
-spring:
-  application:
-    name: sale-task-center-service
-  profiles:
-    active: dev

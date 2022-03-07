@@ -50,8 +50,10 @@ public final class DicConstant {
     /////////////Message////////////
     /////////////QUEUE////////////
     public static final String PURCHASE_ORDER_STOCK_IN_QUEUE = "com.wisteria.purchase.order.stock.in.queue";
+    public static final String PURCHASE_ORDER_DB_ADD_QUEUE = "com.wisteria.purchase.order.db.add.queue";
     /////////////EXCHANGE////////////
     public static final String PURCHASE_ORDER_EXCHANGE = "com.wisteria.purchase.order.exchange";
     /////////////ROUTING_KEY////////////
-    public static final String PURCHASE_ORDER_ROUTING_KEY = "com.wisteria.purchase.order.routing.key";
+    public static final String PURCHASE_ORDER_STOCK_IN_ROUTING_KEY = "com.wisteria.purchase.order.stock.in.routing.key";
+    public static final String PURCHASE_ORDER_DB_ADD_ROUTING_KEY = "com.wisteria.purchase.order.db.add.routing.key";
 }

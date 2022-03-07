@@ -1,7 +1,0 @@
-server:
-  port: 8540
-spring:
-  application:
-    name: stock-center-service
-  profiles:
-    active: dev
