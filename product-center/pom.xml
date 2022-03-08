@@ -15,8 +15,6 @@
     </parent>
 
     <properties>
-<!--        <alibaba-cloud.version>2021.1</alibaba-cloud.version>-->
-<!--        <rocketmq-client.version>4.9.2</rocketmq-client.version>-->
     </properties>
 
     <dependencies>
