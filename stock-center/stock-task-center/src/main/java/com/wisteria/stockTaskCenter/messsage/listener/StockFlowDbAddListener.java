@@ -4,7 +4,6 @@ import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.wisteria.common.entity.base.DicConstant;
 import com.wisteria.common.entity.product.SkuInventoryInOut;
-import com.wisteria.common.entity.product.SkuStock;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockTaskCenter.service.SkuStockService;
 import lombok.extern.slf4j.Slf4j;
@@ -26,6 +25,7 @@ public class StockFlowDbAddListener {
     @RabbitListener(queues = DicConstant.STOCK_INOUT_REDIS_QUEUE, containerFactory = "singleListenerContainer")
     public void consumeMsg(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) Long tag) throws IOException {
         try {
+            log.info("基于MANUAL的手工确认消费模式-消费者监听消费消息:{},消息投递标签：{}", message, tag);
             final SkuInventoryInOut skuInventoryInOut = JSON.parseObject(message, SkuInventoryInOut.class);
             SkuStockFlow skuStockFlow = new SkuStockFlow();
             skuStockFlow.setSkuCode(skuInventoryInOut.getSkuCode());
@@ -33,18 +33,18 @@ public class StockFlowDbAddListener {
             skuStockFlow.setQuantity(skuInventoryInOut.getCount());
             skuStockFlow.setSerialNumber(skuInventoryInOut.getType() + "-" + skuInventoryInOut.getParentId() + "-" + skuInventoryInOut.getItemId());
             skuStockService.insertSkuStockFlow(skuStockFlow);
-            SkuStock skuStock = skuStockService.loadSkuStockBySkuCode(skuInventoryInOut.getSkuCode());
-            if (skuStock == null) {
-                skuStock = new SkuStock();
-                skuStock.setSkuCode(skuInventoryInOut.getSkuCode());
-                skuStock.setInventoryAvailable(skuInventoryInOut.getCount());
-                skuStock.setInventoryTotal(skuInventoryInOut.getCount());
-                skuStockService.insertSkuStock(skuStock);
-            } else {
-                skuStock.setInventoryAvailable(skuStock.getInventoryAvailable() + skuInventoryInOut.getCount());
-                skuStock.setInventoryTotal(skuStock.getInventoryTotal() + skuInventoryInOut.getCount());
-                skuStockService.updateSkuStock(skuStock);
-            }
+//            SkuStock skuStock = skuStockService.loadSkuStockBySkuCode(skuInventoryInOut.getSkuCode());
+//            if (skuStock == null) {
+//                skuStock = new SkuStock();
+//                skuStock.setSkuCode(skuInventoryInOut.getSkuCode());
+//                skuStock.setInventoryAvailable(skuInventoryInOut.getCount());
+//                skuStock.setInventoryTotal(skuInventoryInOut.getCount());
+//                skuStockService.insertSkuStock(skuStock);
+//            } else {
+//                skuStock.setInventoryAvailable(skuStock.getInventoryAvailable() + skuInventoryInOut.getCount());
+//                skuStock.setInventoryTotal(skuStock.getInventoryTotal() + skuInventoryInOut.getCount());
+//                skuStockService.updateSkuStock(skuStock);
+//            }
             channel.basicAck(tag, false);
         } catch (Exception e) {
             skuStockService.insertSkuStockMqError(message);

@@ -1,7 +1,7 @@
 server:
-  port: 8530
+  port: 8549
 spring:
   application:
-    name: sale-server-center-service
+    name: stock-job-center-service
   profiles:
     active: dev

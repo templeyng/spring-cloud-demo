@@ -1,7 +1,7 @@
 server:
-  port: 8541
+  port: 8540
 spring:
   application:
-    name: stock-task-center-service
+    name: stock-server-center-service
   profiles:
     active: dev

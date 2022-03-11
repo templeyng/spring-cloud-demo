@@ -26,7 +26,7 @@
         WHERE sku_code=#{skuCode};
     </update>
 
-    <insert id="insertSkuStockFlow" parameterType="com.wisteria.stockCenter.entity.SkuStockFlow">
+    <insert id="insertSkuStockFlow" parameterType="com.wisteria.stockCenterBase.entity.SkuStockFlow">
         INSERT INTO stock_center.sku_stock_flow
         (`type`, sku_code, quantity, serial_number)
         VALUES(#{type}, #{skuCode}, #{quantity}, #{serialNumber});

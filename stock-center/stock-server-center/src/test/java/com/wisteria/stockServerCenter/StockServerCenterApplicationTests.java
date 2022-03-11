@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScans;
 @ComponentScans(value = {
         @ComponentScan(value = "com.wisteria.*")
 })
-class StockTaskCenterApplicationTests {
+class StockServerCenterApplicationTests {
     @Autowired
     private SkuStockService skuStockService;
 

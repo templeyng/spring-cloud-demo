@@ -2,6 +2,6 @@ server:
   port: 8520
 spring:
   application:
-    name: purchase-center-service
+    name: purchase-server-center-service
   profiles:
     active: dev

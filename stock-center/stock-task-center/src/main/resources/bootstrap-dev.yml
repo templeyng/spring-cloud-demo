@@ -4,7 +4,7 @@ properties:
     namespace: 63a12958-3200-4090-8ff2-293288ce784f
     group: DEMO
     file-extension: yaml
-    common-prop: application-${spring.profiles.active}.yml
+    common-prop: application-${spring.profiles.active}.yaml
 
 spring:
   cloud:

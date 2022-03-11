@@ -1,7 +1,7 @@
 server:
-  port: 8520
+  port: 8521
 spring:
   application:
-    name: purchase-center-service
+    name: purchase-task-center-service
   profiles:
     active: dev

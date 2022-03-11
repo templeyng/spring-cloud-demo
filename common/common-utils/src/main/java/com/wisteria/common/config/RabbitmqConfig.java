@@ -33,12 +33,12 @@ public class RabbitmqConfig {
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
         //设置消息的确认消费模式。在这里为NONE，表示不需要确认消费
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
-        //设置并发消费者实例的初始数量。在这里为10个
-        factory.setConcurrentConsumers(10);
-        //设置并发消费者实例的最大数量。在这里为15个
-        factory.setMaxConcurrentConsumers(15);
-        //设置并发消费者实例中每个实例拉取的消息数量。在这里为10个
-        factory.setPrefetchCount(1);
+//        //设置并发消费者实例的初始数量。在这里为10个
+//        factory.setConcurrentConsumers(10);
+//        //设置并发消费者实例的最大数量。在这里为15个
+//        factory.setMaxConcurrentConsumers(15);
+//        //设置并发消费者实例中每个实例拉取的消息数量。在这里为10个
+//        factory.setPrefetchCount(1);
         return factory;
     }
 

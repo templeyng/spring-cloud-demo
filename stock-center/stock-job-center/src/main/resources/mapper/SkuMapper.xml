@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.wisteria.stockJobCenter.mapper.SkuStockMapper">
+
+
+    <sql id="normalItems">
+        si.id, si.task_time as taskTime, si.task_status as taskStatus, si.create_time as createTime
+    </sql>
+
+    <select id="loadInventoryRefreshTaskLeast" resultType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
+        SELECT
+        <include refid="normalItems"/>
+        FROM stock_center.inventory_refresh_task si
+        order by si.id desc
+        limit 1;
+    </select>
+
+    <select id="loadSkuStockFlowLeast" resultType="com.wisteria.stockCenterBase.entity.SkuStockFlow">
+        SELECT sf.id, sf.`type`, sf.sku_code as skuCode, sf.quantity, sf.serial_number as serialNumber, sf.create_time
+        as createTime
+        FROM stock_center.sku_stock_flow sf
+        order by sf.id desc
+        limit 1;
+    </select>
+
+    <select id="loadSkuStockChange" resultType="com.wisteria.common.entity.product.SkuStock">
+        SELECT sf.id, sf.`type`, sf.sku_code as skuCode, sf.quantity, sf.serial_number as serialNumber, sf.create_time
+        as createTime
+        FROM stock_center.sku_stock_flow sf
+        order by sf.id desc
+        limit 1;
+    </select>
+
+    <insert id="insertInventoryRefreshTask" parameterType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
+        INSERT INTO stock_center.inventory_refresh_task
+        (task_time, stock_flow_id ,task_status)
+        VALUES(#{taskTime}, #{stockFlowId}, 0);
+    </insert>
+</mapper>
