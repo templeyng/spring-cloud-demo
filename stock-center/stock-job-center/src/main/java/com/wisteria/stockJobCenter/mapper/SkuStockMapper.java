@@ -23,4 +23,8 @@ public interface SkuStockMapper {
     void refreshStockByStockTemp();
 
     void insertSkuStockNullable();
+
+    void updateInventoryRefreshTaskStatus(@Param("id") int id);
+
+    void clearSkuStockTemp();
 }
