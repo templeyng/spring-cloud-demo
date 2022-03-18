@@ -19,5 +19,6 @@
         <module>stock-center-base</module>
         <module>stock-server-center</module>
         <module>stock-task-center</module>
+        <module>stock-job-center</module>
     </modules>
 </project>

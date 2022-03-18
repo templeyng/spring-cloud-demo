@@ -1,9 +1,10 @@
 package com.wisteria.stockJobCenter.mapper;
 
-import com.wisteria.common.entity.product.SkuStock;
+import com.wisteria.common.entity.product.SkuStockFlowCollect;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockJobCenter.entity.InventoryRefreshTask;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -15,5 +16,11 @@ public interface SkuStockMapper {
 
     SkuStockFlow loadSkuStockFlowLeast();
 
-    List<SkuStock> loadSkuStockChange();
+    List<SkuStockFlowCollect> loadSkuStockChange(@Param("flowIdStart") int flowIdStart, @Param("flowIdEnd") int flowIdEnd);
+
+    void insertSkuStockTemp(@Param("list") List<SkuStockFlowCollect> insertList);
+
+    void refreshStockByStockTemp();
+
+    void insertSkuStockNullable();
 }

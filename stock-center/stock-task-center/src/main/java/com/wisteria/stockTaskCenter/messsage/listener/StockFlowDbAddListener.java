@@ -22,16 +22,17 @@ public class StockFlowDbAddListener {
     @Autowired
     private SkuStockService skuStockService;
 
-    @RabbitListener(queues = DicConstant.STOCK_INOUT_REDIS_QUEUE, containerFactory = "singleListenerContainer")
+    @RabbitListener(queues = DicConstant.STOCK_FLOW_DB_ADD_QUEUE, containerFactory = "singleListenerContainer")
     public void consumeMsg(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) Long tag) throws IOException {
         try {
-            log.info("基于MANUAL的手工确认消费模式-消费者监听消费消息:{},消息投递标签：{}", message, tag);
+            log.info("StockFlowDbAddListener-消费者监听消费消息:{},消息投递标签：{}", message, tag);
             final SkuInventoryInOut skuInventoryInOut = JSON.parseObject(message, SkuInventoryInOut.class);
             SkuStockFlow skuStockFlow = new SkuStockFlow();
             skuStockFlow.setSkuCode(skuInventoryInOut.getSkuCode());
             skuStockFlow.setType(skuInventoryInOut.getType());
             skuStockFlow.setQuantity(skuInventoryInOut.getCount());
             skuStockFlow.setSerialNumber(skuInventoryInOut.getType() + "-" + skuInventoryInOut.getParentId() + "-" + skuInventoryInOut.getItemId());
+            log.info("StockFlowDbAddListener-录入数据库:{}", skuStockFlow);
             skuStockService.insertSkuStockFlow(skuStockFlow);
 //            SkuStock skuStock = skuStockService.loadSkuStockBySkuCode(skuInventoryInOut.getSkuCode());
 //            if (skuStock == null) {

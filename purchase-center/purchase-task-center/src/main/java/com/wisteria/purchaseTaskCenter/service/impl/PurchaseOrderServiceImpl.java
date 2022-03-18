@@ -7,12 +7,14 @@ import com.wisteria.purchaseCenterBase.entity.PurchaseOrderItem;
 import com.wisteria.purchaseTaskCenter.mapper.PurchaseOrderMapper;
 import com.wisteria.purchaseTaskCenter.message.send.PurchaseOrderStockInPublisher;
 import com.wisteria.purchaseTaskCenter.service.PurchaseOrderService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Autowired
@@ -27,7 +29,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         List<PurchaseOrderItem> purchaseOrderItems = purchaseOrder.getPurchaseOrderItems();
         purchaseOrderItems.forEach(e -> e.setParentId(Integer.parseInt(String.valueOf(purchaseOrder.getId()))));
         purchaseOrderMapper.insertPurchaseOrderItems(purchaseOrderItems);
-        purchaseOrderItems.forEach(e -> purchaseOrderStockIn(e.getParentId(), e.getSkuCode(), e.getItemId(), e.getQuantity()));
+        purchaseOrderItems.forEach(e -> {
+            log.info("SKU存入库存开始：{}", e);
+            purchaseOrderStockIn(e.getParentId(), e.getSkuCode(), e.getItemId(), e.getQuantity());
+        });
     }
 
     @Override

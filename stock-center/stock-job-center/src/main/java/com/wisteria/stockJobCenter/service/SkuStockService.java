@@ -1,12 +1,12 @@
 package com.wisteria.stockJobCenter.service;
 
-import com.wisteria.common.entity.product.SkuStock;
-import com.wisteria.stockCenterBase.entity.SkuStockFlow;
+import com.wisteria.common.entity.base.Res;
 
 public interface SkuStockService {
 
     /**
      * 刷新sku库存数据
+     * @return
      */
-    void inventoryQuantityRefresh();
+    Res inventoryQuantityRefresh();
 }

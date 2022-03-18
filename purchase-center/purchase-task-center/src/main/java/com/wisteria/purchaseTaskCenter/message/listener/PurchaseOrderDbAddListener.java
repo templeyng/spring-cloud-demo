@@ -27,13 +27,14 @@ public class PurchaseOrderDbAddListener {
     @RabbitListener(queues = DicConstant.PURCHASE_ORDER_DB_ADD_QUEUE, containerFactory = "singleListenerContainer")
     public void consumeMsg(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) Long tag) throws IOException {
         try {
+            log.info("PurchaseOrderDbAddListener-消费者监听消费消息:{},消息投递标签：{}", message, tag);
             final PurchaseOrder purchaseOrder = JSON.parseObject(message, PurchaseOrder.class);
             purchaseOrderService.insertPurchaseOrder(purchaseOrder);
             channel.basicAck(tag, false);
         } catch (Exception e) {
             purchaseOrderService.insertPurchaseMqError(message);
             channel.basicAck(tag, false);
-            log.error("基于MANUAL的手工确认消费模式-消费者监听消费消息:{},消息投递标签：{},发生异常：", message, tag, e);
+            log.error("PurchaseOrderDbAddListener-消费者监听消费消息:{},消息投递标签：{},发生异常：", message, tag, e);
         }
     }
 }

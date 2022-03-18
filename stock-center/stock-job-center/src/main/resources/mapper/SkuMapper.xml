@@ -23,17 +23,56 @@
         limit 1;
     </select>
 
-    <select id="loadSkuStockChange" resultType="com.wisteria.common.entity.product.SkuStock">
-        SELECT sf.id, sf.`type`, sf.sku_code as skuCode, sf.quantity, sf.serial_number as serialNumber, sf.create_time
-        as createTime
+    <select id="loadSkuStockChange" resultType="com.wisteria.common.entity.product.SkuStockFlowCollect">
+        SELECT sf.sku_code as skuCode ,sum(sf.quantity) as quantity ,sf.`type`
         FROM stock_center.sku_stock_flow sf
-        order by sf.id desc
-        limit 1;
+        where sf.id BETWEEN #{flowIdStart} and #{flowIdEnd}
+        group by sf.`type` ,sf.sku_code ;
     </select>
 
     <insert id="insertInventoryRefreshTask" parameterType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
         INSERT INTO stock_center.inventory_refresh_task
         (task_time, stock_flow_id ,task_status)
         VALUES(#{taskTime}, #{stockFlowId}, 0);
+    </insert>
+
+    <insert id="insertSkuStockTemp" parameterType="com.wisteria.common.entity.product.SkuStockFlowCollect">
+        INSERT INTO stock_center.sku_stock_temp
+        (sku_code, quantity)
+        VALUES
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{item.skuCode}, #{item.quantity})
+        </foreach>
+        ;
+    </insert>
+
+    <update id="refreshStockByStockTemp">
+        UPDATE
+        stock_center.sku_stock ss ,
+        stock_center.sku_stock_temp sst
+        set
+        ss.inventory_available = ss.inventory_available + sst.quantity,
+        ss.inventory_total = ss.inventory_total + sst.quantity
+        where
+        ss.sku_code = sst.sku_code;
+    </update>
+
+    <insert id="insertSkuStockNullable">
+        INSERT
+        INTO
+        stock_center.sku_stock
+        (inventory_available,
+        inventory_total,
+        sku_code)
+        select
+        0,
+        0,
+        sst.sku_code
+        FROM
+        stock_center.sku_stock_temp sst
+        left join stock_center.sku_stock ss on
+        ss.sku_code = sst.sku_code
+        where
+        ss.stock_id is null;
     </insert>
 </mapper>

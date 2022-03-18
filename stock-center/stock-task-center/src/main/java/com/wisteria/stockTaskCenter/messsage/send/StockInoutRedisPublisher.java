@@ -23,6 +23,7 @@ public class StockInoutRedisPublisher {
      */
     public void sendMsg(SkuInventoryInOut so) {
         try {
+            log.info("StockInoutRedisPublisher-生产者-发送消息：{} ", so);
             //指定消息模型中的交换机
             rabbitTemplate.setExchange(DicConstant.STOCK_INOUT_EXCHANGE);
             //指定消息模型中的路由
@@ -30,7 +31,7 @@ public class StockInoutRedisPublisher {
             //转化并发送消息
             rabbitTemplate.convertAndSend(JSON.toJSONString(so));
         } catch (Exception e) {
-            log.error("rabbitmq demo-生产者-发送消息发生异常：{} ", so, e.fillInStackTrace());
+            log.error("StockInoutRedisPublisher-生产者-发送消息发生异常：{} ", so, e.fillInStackTrace());
         }
     }
 }
