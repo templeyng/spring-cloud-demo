@@ -4,7 +4,8 @@
 
 
     <sql id="normalItems">
-        si.id, si.task_time as taskTime, si.task_status as taskStatus, si.create_time as createTime
+        si.id, si.task_time as taskTime,si.stock_flow_id as stockFlowId, si.task_status as taskStatus, si.create_time as
+        createTime
     </sql>
 
     <select id="loadInventoryRefreshTaskLeast" resultType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
@@ -30,7 +31,8 @@
         group by sf.`type` ,sf.sku_code ;
     </select>
 
-    <insert id="insertInventoryRefreshTask" useGeneratedKeys="true" keyProperty="id" parameterType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
+    <insert id="insertInventoryRefreshTask" useGeneratedKeys="true" keyProperty="id"
+            parameterType="com.wisteria.stockJobCenter.entity.InventoryRefreshTask">
         INSERT INTO stock_center.inventory_refresh_task
         (task_time, stock_flow_id ,task_status)
         VALUES(#{taskTime}, #{stockFlowId}, 0);
