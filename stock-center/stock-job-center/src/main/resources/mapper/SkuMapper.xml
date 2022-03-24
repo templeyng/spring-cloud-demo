@@ -24,7 +24,7 @@
         limit 1;
     </select>
 
-    <select id="loadSkuStockChange" resultType="com.wisteria.common.entity.product.SkuStockFlowCollect">
+    <select id="loadSkuStockChange" resultType="com.wisteria.stockCenterBase.entity.SkuStockFlowCollect">
         SELECT sf.sku_code as skuCode ,sum(sf.quantity) as quantity ,sf.`type`
         FROM stock_center.sku_stock_flow sf
         where sf.id BETWEEN #{flowIdStart} and #{flowIdEnd}
@@ -38,7 +38,7 @@
         VALUES(#{taskTime}, #{stockFlowId}, 0);
     </insert>
 
-    <insert id="insertSkuStockTemp" parameterType="com.wisteria.common.entity.product.SkuStockFlowCollect">
+    <insert id="insertSkuStockTemp" parameterType="com.wisteria.stockCenterBase.entity.SkuStockFlowCollect">
         INSERT INTO stock_center.sku_stock_temp
         (sku_code, quantity)
         VALUES

@@ -8,19 +8,19 @@
     </sql>
 
     <select id="loadSkuStockBySkuCode" parameterType="java.lang.String"
-            resultType="com.wisteria.common.entity.product.SkuStock">
+            resultType="com.wisteria.stockCenterBase.entity.SkuStock">
         SELECT
         <include refid="normalItems"/>
         FROM stock_center.sku_stock st where st.sku_code = #{skuCode};
     </select>
 
-    <insert id="insertSkuStock" parameterType="com.wisteria.common.entity.product.SkuStock">
+    <insert id="insertSkuStock" parameterType="com.wisteria.stockCenterBase.entity.SkuStock">
         INSERT INTO stock_center.sku_stock
         (sku_code, inventory_available, inventory_total)
         VALUES(#{skuCode}, #{inventoryAvailable}, #{inventoryTotal});
     </insert>
 
-    <update id="updateSkuStock" parameterType="com.wisteria.common.entity.product.SkuStock">
+    <update id="updateSkuStock" parameterType="com.wisteria.stockCenterBase.entity.SkuStock">
         UPDATE stock_center.sku_stock
         SET inventory_available=#{inventoryAvailable}, inventory_total=#{inventoryTotal}
         WHERE sku_code=#{skuCode};

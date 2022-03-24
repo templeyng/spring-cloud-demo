@@ -46,20 +46,29 @@ public final class DicConstant {
 
     /////////////Redis Key////////////
     public static final String PRODUCT_SKU_ALL_LIST = "product_sku_all_list";
+    public static final String PRODUCT_SKU_DETAIL = "product_sku_detail_";
     public static final String SKU_STOCK_INVENTORY_AVAILABLE = "sku_stock_inventory_available_";
+    public static final String SKU_STOCK_INVENTORY_AVAILABLE_OCCUPIED = "sku_stock_inventory_available_occupied_";
+    public static final String STOCK_SKU_SEC_KILL_INVENTORY_AVAILABLE = "stock_sku_sec_kill_inventory_available_";
+    public static final String STOCK_INOUT_REDIS_REQUEST = "stock_inout_redis_request_";
 
     /////////////Message////////////
     /////////////QUEUE////////////
     public static final String PURCHASE_ORDER_STOCK_IN_QUEUE = "com.wisteria.purchase.order.stock.in.queue";
     public static final String PURCHASE_ORDER_DB_ADD_QUEUE = "com.wisteria.purchase.order.db.add.queue";
+    public static final String SALE_ORDER_STOCK_OUT_QUEUE = "com.wisteria.sale.order.stock.out.queue";
+    public static final String SALE_ORDER_DB_ADD_QUEUE = "com.wisteria.sale.order.db.add.queue";
     public static final String STOCK_INOUT_REDIS_QUEUE = "com.wisteria.stock.inout.redis.queue";
     public static final String STOCK_FLOW_DB_ADD_QUEUE = "com.wisteria.stock.flow.db.add.queue";
     /////////////EXCHANGE////////////
     public static final String PURCHASE_ORDER_EXCHANGE = "com.wisteria.purchase.order.exchange";
+    public static final String SALE_ORDER_EXCHANGE = "com.wisteria.sale.order.exchange";
     public static final String STOCK_INOUT_EXCHANGE = "com.wisteria.stock.inout.exchange";
     /////////////ROUTING_KEY////////////
     public static final String PURCHASE_ORDER_STOCK_IN_ROUTING_KEY = "com.wisteria.purchase.order.stock.in.routing.key";
     public static final String PURCHASE_ORDER_DB_ADD_ROUTING_KEY = "com.wisteria.purchase.order.db.add.routing.key";
+    public static final String SALE_ORDER_STOCK_OUT_ROUTING_KEY = "com.wisteria.sale.order.stock.out.routing.key";
+    public static final String SALE_ORDER_DB_ADD_ROUTING_KEY = "com.wisteria.sale.order.db.add.routing.key";
     public static final String STOCK_INOUT_REDIS_ROUTING_KEY = "com.wisteria.stock.inout.redis.routing.key";
     public static final String STOCK_FLOW_DB_ADD_ROUTING_KEY = "com.wisteria.stock.flow.db.add.routing.key";
 }

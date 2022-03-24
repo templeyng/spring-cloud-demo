@@ -1,6 +1,6 @@
 package com.wisteria.stockTaskCenter.service;
 
-import com.wisteria.common.entity.product.SkuStock;
+import com.wisteria.stockCenterBase.entity.SkuStock;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 
 public interface SkuStockService {

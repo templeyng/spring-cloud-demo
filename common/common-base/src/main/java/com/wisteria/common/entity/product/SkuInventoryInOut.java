@@ -9,4 +9,5 @@ public class SkuInventoryInOut {
     private int type;
     private int parentId;
     private int itemId;
+    private String uuid;
 }

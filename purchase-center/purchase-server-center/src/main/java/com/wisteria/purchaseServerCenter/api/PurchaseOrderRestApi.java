@@ -21,10 +21,10 @@ public class PurchaseOrderRestApi {
     public Res secKillOrderInit() {
         try {
             purchaseOrderService.secKillOrderInit();
-            return Res.success();
+            return Res.success("订单初始化成功");
         } catch (InsertPurchaseOrderRedisException e) {
-            log.error("加载秒杀失败", e);
+            log.error("订单初始化失败", e);
         }
-        return Res.error("加载秒杀失败");
+        return Res.error("订单初始化失败");
     }
 }

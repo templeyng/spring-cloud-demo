@@ -13,7 +13,7 @@ public class InventoryQuantityJob {
     @Autowired
     private SkuStockService skuStockService;
 
-    @Scheduled(cron="0 */5 * * * ?")
+    @Scheduled(cron="0 */2 * * * ?")
     public void inventoryQuantityRefresh(){
         skuStockService.inventoryQuantityRefresh();
     }

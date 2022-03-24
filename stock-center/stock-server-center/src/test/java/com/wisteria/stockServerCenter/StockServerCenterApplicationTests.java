@@ -1,7 +1,7 @@
 package com.wisteria.stockServerCenter;
 
 import com.wisteria.common.entity.base.Res;
-import com.wisteria.common.entity.product.SkuStock;
+import com.wisteria.stockCenterBase.entity.SkuStock;
 import com.wisteria.common.utils.SaleRedisTemplate;
 import com.wisteria.stockServerCenter.service.SkuStockService;
 import org.junit.jupiter.api.Test;

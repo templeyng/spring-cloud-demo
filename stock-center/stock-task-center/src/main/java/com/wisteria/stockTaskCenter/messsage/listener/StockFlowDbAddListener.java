@@ -34,18 +34,6 @@ public class StockFlowDbAddListener {
             skuStockFlow.setSerialNumber(skuInventoryInOut.getType() + "-" + skuInventoryInOut.getParentId() + "-" + skuInventoryInOut.getItemId());
             log.info("StockFlowDbAddListener-录入数据库:{}", skuStockFlow);
             skuStockService.insertSkuStockFlow(skuStockFlow);
-//            SkuStock skuStock = skuStockService.loadSkuStockBySkuCode(skuInventoryInOut.getSkuCode());
-//            if (skuStock == null) {
-//                skuStock = new SkuStock();
-//                skuStock.setSkuCode(skuInventoryInOut.getSkuCode());
-//                skuStock.setInventoryAvailable(skuInventoryInOut.getCount());
-//                skuStock.setInventoryTotal(skuInventoryInOut.getCount());
-//                skuStockService.insertSkuStock(skuStock);
-//            } else {
-//                skuStock.setInventoryAvailable(skuStock.getInventoryAvailable() + skuInventoryInOut.getCount());
-//                skuStock.setInventoryTotal(skuStock.getInventoryTotal() + skuInventoryInOut.getCount());
-//                skuStockService.updateSkuStock(skuStock);
-//            }
             channel.basicAck(tag, false);
         } catch (Exception e) {
             skuStockService.insertSkuStockMqError(message);

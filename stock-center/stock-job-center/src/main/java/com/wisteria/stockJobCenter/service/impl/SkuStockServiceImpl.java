@@ -2,7 +2,7 @@ package com.wisteria.stockJobCenter.service.impl;
 
 import com.wisteria.common.entity.base.Res;
 import com.wisteria.common.entity.product.SkuInventoryInOutType;
-import com.wisteria.common.entity.product.SkuStockFlowCollect;
+import com.wisteria.stockCenterBase.entity.SkuStockFlowCollect;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockJobCenter.entity.InventoryRefreshTask;
 import com.wisteria.stockJobCenter.mapper.SkuStockMapper;
@@ -50,7 +50,7 @@ public class SkuStockServiceImpl implements SkuStockService {
                 //流水放入MAP
                 skuStockChange.forEach(e -> {
                     switch (e.getType()) {
-                        case SkuInventoryInOutType.REFUND_OUT:
+                        case SkuInventoryInOutType.PURCHASE_REFUND_OUT:
                         case SkuInventoryInOutType.SALE_OUT:
                             e.setQuantity(e.getQuantity() * -1);
                     }

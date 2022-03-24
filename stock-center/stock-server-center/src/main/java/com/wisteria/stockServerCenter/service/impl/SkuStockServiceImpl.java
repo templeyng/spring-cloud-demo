@@ -1,6 +1,6 @@
 package com.wisteria.stockServerCenter.service.impl;
 
-import com.wisteria.common.entity.product.SkuStock;
+import com.wisteria.stockCenterBase.entity.SkuStock;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockServerCenter.mapper.SkuStockMapper;
 import com.wisteria.stockServerCenter.service.SkuStockService;

@@ -1,6 +1,6 @@
 package com.wisteria.stockJobCenter.mapper;
 
-import com.wisteria.common.entity.product.SkuStockFlowCollect;
+import com.wisteria.stockCenterBase.entity.SkuStockFlowCollect;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockJobCenter.entity.InventoryRefreshTask;
 import org.apache.ibatis.annotations.Mapper;

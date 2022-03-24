@@ -1,6 +1,6 @@
 package com.wisteria.stockServerCenter.mapper;
 
-import com.wisteria.common.entity.product.SkuStock;
+import com.wisteria.stockCenterBase.entity.SkuStock;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import org.apache.ibatis.annotations.Mapper;
 
