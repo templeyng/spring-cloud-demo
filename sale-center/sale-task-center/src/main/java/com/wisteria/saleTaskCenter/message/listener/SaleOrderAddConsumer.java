@@ -34,7 +34,7 @@ public class SaleOrderAddConsumer {
     @RabbitListener(queues = DicConstant.SALE_ORDER_DB_ADD_QUEUE, containerFactory = "singleListenerContainer")
     public void consumeMsg(String message, Channel channel, @Header(AmqpHeaders.DELIVERY_TAG) Long tag) throws IOException {
         try {
-            final SaleOrderLd saleOrderLd = JSON.parseObject(message, SaleOrderLd.class);
+            SaleOrderLd saleOrderLd = JSON.parseObject(message, SaleOrderLd.class);
             Object skuObject = productRedisTemplate.get(DicConstant.PRODUCT_SKU_DETAIL + saleOrderLd.getSaleOrderItem().getSkuCode());
             if(skuObject!=null){
                 Sku sku = (Sku) skuObject;

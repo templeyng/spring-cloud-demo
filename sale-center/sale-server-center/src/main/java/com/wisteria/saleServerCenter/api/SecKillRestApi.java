@@ -47,7 +47,7 @@ public class SecKillRestApi {
                     int quantity = ((int) o * 9) / 10;
                     saleRedisTemplate.set(DicConstant.STOCK_SKU_SEC_KILL_INVENTORY_AVAILABLE + s.getSkuCode(), quantity);
                     stockRedisTemplate.set(DicConstant.SKU_STOCK_INVENTORY_AVAILABLE_OCCUPIED + s.getSkuCode(), quantity);
-                    stockRedisTemplate.set(DicConstant.SKU_STOCK_INVENTORY_AVAILABLE + s.getSkuCode(), ((int) o - quantity));
+//                    stockRedisTemplate.set(DicConstant.SKU_STOCK_INVENTORY_AVAILABLE + s.getSkuCode(), ((int) o - quantity));
                 }
             });
             return Res.success("初始化秒杀事件完成");

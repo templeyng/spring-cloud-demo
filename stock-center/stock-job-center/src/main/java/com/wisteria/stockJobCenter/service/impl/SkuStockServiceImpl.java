@@ -2,8 +2,8 @@ package com.wisteria.stockJobCenter.service.impl;
 
 import com.wisteria.common.entity.base.Res;
 import com.wisteria.common.entity.product.SkuInventoryInOutType;
-import com.wisteria.stockCenterBase.entity.SkuStockFlowCollect;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
+import com.wisteria.stockCenterBase.entity.SkuStockFlowCollect;
 import com.wisteria.stockJobCenter.entity.InventoryRefreshTask;
 import com.wisteria.stockJobCenter.mapper.SkuStockMapper;
 import com.wisteria.stockJobCenter.service.SkuStockService;
@@ -29,13 +29,16 @@ public class SkuStockServiceImpl implements SkuStockService {
             inventoryRefreshTask.setStockFlowId(0);
             inventoryRefreshTask.setTaskStatus(1);
         }
-        if (inventoryRefreshTask != null && inventoryRefreshTask.getTaskStatus() == 1) {
+        if (inventoryRefreshTask.getTaskStatus() == 1) {
             Map<String, Integer> skuStockMap = new HashMap<>();
             //获取上次完结的id,(没有则变模式从0开始)
             int stockFlowId = inventoryRefreshTask.getStockFlowId();
 
             //加载最新的库存流水Id
             SkuStockFlow skuStockFlow = skuStockMapper.loadSkuStockFlowLeast();
+            if(skuStockFlow == null){
+                return Res.error("暂无流水记录");
+            }
             //判断是否有新的流水数据
             if (skuStockFlow.getId() > stockFlowId) {
                 //将任务加入数据库
@@ -46,13 +49,11 @@ public class SkuStockServiceImpl implements SkuStockService {
 
                 //开始处理任务,加载时间段内的库存流水
                 //查找需要处理的流水记录
-                List<SkuStockFlowCollect> skuStockChange = skuStockMapper.loadSkuStockChange(stockFlowId, skuStockFlow.getId());
+                List<SkuStockFlowCollect> skuStockChange = skuStockMapper.loadSkuStockChange((stockFlowId + 1), skuStockFlow.getId());
                 //流水放入MAP
                 skuStockChange.forEach(e -> {
                     switch (e.getType()) {
-                        case SkuInventoryInOutType.PURCHASE_REFUND_OUT:
-                        case SkuInventoryInOutType.SALE_OUT:
-                            e.setQuantity(e.getQuantity() * -1);
+                        case SkuInventoryInOutType.PURCHASE_REFUND_OUT, SkuInventoryInOutType.SALE_OUT -> e.setQuantity(e.getQuantity() * -1);
                     }
                     if (skuStockMap.containsKey(e.getSkuCode())) {
                         Integer skuStockQuantity = skuStockMap.get(e.getSkuCode());

@@ -21,7 +21,7 @@
         <maven-resources.version>3.2.0</maven-resources.version>
         <maven-plugin.version>2.6.2</maven-plugin.version>
 
-        <mybatis-spring-boot-starter.version>2.2.1</mybatis-spring-boot-starter.version>
+        <mybatis-spring-boot-starter.version>2.2.2</mybatis-spring-boot-starter.version>
         <nacos-common-base.version>1.0.0</nacos-common-base.version>
     </properties>
 

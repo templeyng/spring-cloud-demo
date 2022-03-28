@@ -45,7 +45,6 @@ public class SaleOrderServiceImpl implements SaleOrderService {
         if (ot == null) {
             saleRedisTemplate.set(DicConstant.STOCK_INOUT_REDIS_REQUEST + uuid, 0);
             saleOrderLd.setSaleOrderId(uuid);
-//
             saleRedisTemplate.set(DicConstant.STOCK_SKU_SEC_KILL_INVENTORY_AVAILABLE + skuCode, quantity - saleOrderLd.getSaleOrderItem().getQuantity());
             saleOrderDbAddPublisher.sendMsg(saleOrderLd);
         } else {

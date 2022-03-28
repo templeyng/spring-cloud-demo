@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.wisteria.common.entity.base.DicConstant;
 import com.wisteria.common.entity.product.SkuInventoryInOut;
+import com.wisteria.common.entity.product.SkuInventoryInOutType;
 import com.wisteria.stockCenterBase.entity.SkuStockFlow;
 import com.wisteria.stockTaskCenter.service.SkuStockService;
 import lombok.extern.slf4j.Slf4j;
@@ -30,7 +31,15 @@ public class StockFlowDbAddListener {
             SkuStockFlow skuStockFlow = new SkuStockFlow();
             skuStockFlow.setSkuCode(skuInventoryInOut.getSkuCode());
             skuStockFlow.setType(skuInventoryInOut.getType());
-            skuStockFlow.setQuantity(skuInventoryInOut.getCount());
+            switch (skuInventoryInOut.getType()) {
+                case SkuInventoryInOutType.PURCHASE_REFUND_OUT:
+                case SkuInventoryInOutType.SALE_OUT:
+                    skuStockFlow.setQuantity(skuInventoryInOut.getCount() * -1);
+                    break;
+                default:
+                    skuStockFlow.setQuantity(skuInventoryInOut.getCount());
+                    break;
+            }
             skuStockFlow.setSerialNumber(skuInventoryInOut.getType() + "-" + skuInventoryInOut.getParentId() + "-" + skuInventoryInOut.getItemId());
             log.info("StockFlowDbAddListener-录入数据库:{}", skuStockFlow);
             skuStockService.insertSkuStockFlow(skuStockFlow);
