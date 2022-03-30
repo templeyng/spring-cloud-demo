@@ -41,8 +41,6 @@ public class StockInoutRedisListener {
                 if (sio.getCount() > 0) {
                     log.info("新增成功SKU库存缓存：SKU：{},Count：{}", sio.getSkuCode(), sio.getCount());
                     stockRedisTemplate.set(DicConstant.SKU_STOCK_INVENTORY_AVAILABLE + sio.getSkuCode(), sio.getCount());
-                } else {
-                    throw new InsertStockRedisException();
                 }
             } else {
                 log.info("修改SKU库存缓存：SKU：{},Count：{}", sio.getSkuCode(), sio.getCount());
@@ -51,11 +49,9 @@ public class StockInoutRedisListener {
                 if (skuQuantityResult >= 0) {
                     log.info("修改成功SKU库存缓存：SKU：{},Count：{}", sio.getSkuCode(), sio.getCount());
                     stockRedisTemplate.set(DicConstant.SKU_STOCK_INVENTORY_AVAILABLE + sio.getSkuCode(), skuQuantityResult);
-                } else {
-                    throw new InsertStockRedisException();
+                    stockFlowDbAddPublisher.sendMsg(sio);
                 }
             }
-            stockFlowDbAddPublisher.sendMsg(sio);
             channel.basicAck(tag, false);
         } catch (Exception e) {
             skuStockService.insertSkuStockMqError(message);

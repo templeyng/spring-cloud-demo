@@ -1,4 +1,4 @@
-package com.wisteria.saleServerCenter.message;
+package com.wisteria.saleTaskCenter.message.send;
 
 import com.alibaba.fastjson.JSON;
 import com.wisteria.common.entity.base.DicConstant;

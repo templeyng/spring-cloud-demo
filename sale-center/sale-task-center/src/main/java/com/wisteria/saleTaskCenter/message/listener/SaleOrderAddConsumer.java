@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.rabbitmq.client.Channel;
 import com.wisteria.common.entity.base.DicConstant;
 import com.wisteria.common.entity.product.Sku;
-import com.wisteria.common.entity.product.SkuInventoryInOut;
 import com.wisteria.common.utils.ProductRedisTemplate;
-import com.wisteria.saleCenterBase.entity.SaleOrderItem;
+import com.wisteria.common.utils.SaleRedisTemplate;
 import com.wisteria.saleCenterBase.entity.SaleOrderLd;
 import com.wisteria.saleTaskCenter.service.SaleOrderService;
 import lombok.extern.slf4j.Slf4j;
@@ -36,7 +35,7 @@ public class SaleOrderAddConsumer {
         try {
             SaleOrderLd saleOrderLd = JSON.parseObject(message, SaleOrderLd.class);
             Object skuObject = productRedisTemplate.get(DicConstant.PRODUCT_SKU_DETAIL + saleOrderLd.getSaleOrderItem().getSkuCode());
-            if(skuObject!=null){
+            if (skuObject != null) {
                 Sku sku = (Sku) skuObject;
                 saleOrderLd.getSaleOrderItem().setPrice(sku.getPrice());
                 saleOrderLd.getSaleOrderItem().setTax(sku.getTax());

@@ -1,11 +1,13 @@
 package com.wisteria.saleTaskCenter.service.impl;
 
+import com.wisteria.common.entity.base.DicConstant;
 import com.wisteria.common.entity.product.SkuInventoryInOut;
 import com.wisteria.common.entity.product.SkuInventoryInOutType;
+import com.wisteria.common.utils.SaleRedisTemplate;
 import com.wisteria.saleCenterBase.entity.SaleOrderItem;
 import com.wisteria.saleCenterBase.entity.SaleOrderLd;
-import com.wisteria.saleServerCenter.message.SaleOrderStockOutPublisher;
 import com.wisteria.saleTaskCenter.mapper.SaleOrderMapper;
+import com.wisteria.saleTaskCenter.message.send.SaleOrderStockOutPublisher;
 import com.wisteria.saleTaskCenter.service.SaleOrderService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,9 @@ public class SaleOrderServiceImpl implements SaleOrderService {
     @Autowired
     private SaleOrderStockOutPublisher saleOrderStockOutPublisher;
 
+    @Autowired
+    private SaleRedisTemplate saleRedisTemplate;
+
     @Override
     public void insertSaleOrderLd(SaleOrderLd saleOrderLd) {
         //插入数据库
@@ -33,8 +38,10 @@ public class SaleOrderServiceImpl implements SaleOrderService {
         List<SaleOrderItem> saleOrderItems = new ArrayList<>();
         saleOrderItems.add(saleOrderItem);
         saleOrderMapper.insertSaleOrderItems(saleOrderItems);
+        //删除Redis请求
+        saleRedisTemplate.del(DicConstant.STOCK_INOUT_REDIS_REQUEST + saleOrderLd.getSaleOrderId());
         //发送mq,进入行实际扣减库存
-        saleOrderItems.forEach(e->{
+        saleOrderItems.forEach(e -> {
             SkuInventoryInOut skuInventoryInOut = new SkuInventoryInOut();
             skuInventoryInOut.setSkuCode(e.getSkuCode());
             skuInventoryInOut.setParentId(e.getParentId());
